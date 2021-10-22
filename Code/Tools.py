@@ -6,29 +6,32 @@ class Tools:
         booknum = 0
 
         infile = open(r"eng_web_word.txt", "r")
-        stopline = "Book 0"
-        dicttitle = "Book 1"
+        dicttitle = "Book 0"
+        title = "Book 0"
         output = {}
         linesofbook = []
-        bookstracker = 0
-        divisible = 1
+        booktracker = 1
 
         for line in infile:
-            if stopline in line:
-                print(line)
+            if title in line:
                 output[dicttitle] = linesofbook
                 linesofbook = []
                 booknum = booknum + 1
-                print(booknum)
-                if booknum % 10 == divisible:
-                    divisible = bookstracker - 1
-                    bookstracker = bookstracker + 1
-                    num = str(bookstracker)
-                    stopline = "Book " + num
                 num = str(booknum)
-                dicttitle = "Book 0" + num
+                booktracker = booknum + 1
+                tracknum = str(booktracker)
+                if booknum >= 10:
+                    dicttitle = "Book " + num
+                else:
+                    dicttitle = "Book 0" + num
+                if booktracker >= 10:
+                    title = "Book " + tracknum
+                else:
+                    title = "Book 0" + tracknum
             linesofbook.append(line)
 
+        for title, item in output.items():
+            print(title)
         for title, item in output.items():
             outputfile = title + ".txt"
             with open(outputfile, "w") as outfile:
