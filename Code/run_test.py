@@ -1,4 +1,9 @@
-from testing import Testing
-import os
+from Tools import Tools
 
-Testing.edit_character("C")
+
+class Run:
+    def __init__(self):
+        Tools.seperate_books(self)
+
+
+Run()
