@@ -6,6 +6,10 @@ class Tools:
         booknum = 0
 
         infile = open(r"eng_web_word.txt", "r")
+        lastcheck = open(r"eng_web_word.txt", "r")
+        lines = lastcheck.readlines()
+        last = lines[-1]
+
         dicttitle = "Book 0"
         title = "Book 0"
         output = {}
@@ -29,7 +33,12 @@ class Tools:
                 else:
                     title = "Book 0" + tracknum
             linesofbook.append(line)
+            if line == last:
+                output[dicttitle] = linesofbook
+        return output
 
+    def create_books(self):
+        output = Tools.seperate_books(self)
         for title, item in output.items():
             print(title)
         for title, item in output.items():
