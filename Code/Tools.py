@@ -56,4 +56,11 @@ class Tools:
             output[books[i]] = dictionary[title]
             i+=1
         return output
+
+    '''def join_verse(self, book):
+        book = "World_English_Bible/" + book + ".txt"
+            with open(book, "r") as book_file:
+                for line in book_file:
+                    if line != "\n":
+                        list.append(line)'''
     
