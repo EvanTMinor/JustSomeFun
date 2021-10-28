@@ -4,7 +4,7 @@ from select_reading import SelectReading
 
 class Run:
     def __init__(self):
-        SelectReading.run(self)
+        Tools.join_verse(self, "3 John")
 
 
 Run()

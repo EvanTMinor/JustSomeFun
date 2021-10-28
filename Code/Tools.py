@@ -57,10 +57,34 @@ class Tools:
             i+=1
         return output
 
-    '''def join_verse(self, book):
+    def join_verse(self, book):
         book = "World_English_Bible/" + book + ".txt"
-            with open(book, "r") as book_file:
-                for line in book_file:
+        past_title = False
+        output = {}
+        lines_of_verse = []
+        current_verse = ""
+        with open(book, "r") as book_file:
+            for line in book_file:
+                if "001:001" in line:
+                    past_title = True
+                if past_title == True:
                     if line != "\n":
-                        list.append(line)'''
+                        if(line[3]==':'):
+                            print(current_verse)
+                            output[current_verse] = lines_of_verse
+                            lines_of_verse = []
+                            current_verse = line[0:7]
+                            lines_of_verse.append(line)
+                        else:
+                                lines_of_verse.append(line)
+                '''else:
+                    if "Book" in line and past_title == False:
+                        output[current_verse] = line'''
+        outputfile = "linedverse.txt"
+        with open(outputfile, "w") as outfile:
+            for title, item in output.items():
+                outfile.write(title)
+                for line in item:
+                    outfile.write(line)
+                outfile.write("\n")
     
