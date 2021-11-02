@@ -6,8 +6,8 @@ class Tools:
     def seperate_books(self):
         booknum = 0
 
-        infile = open(r"World_English_Bible/eng_web_word.txt", "r")
-        lastcheck = open(r"World_English_Bible/eng_web_word.txt", "r")
+        infile = open(r"source/eng_web_word.txt", "r")
+        lastcheck = open(r"source/eng_web_word.txt", "r")
         lines = lastcheck.readlines()
         last = lines[-1]
 
@@ -57,34 +57,42 @@ class Tools:
             i+=1
         return output
 
-    def join_verse(self, book):
-        book = "World_English_Bible/" + book + ".txt"
+    def join_verse(self, dictionary):
+        book = book + ".txt"
         past_title = False
+        title = True
         output = {}
         lines_of_verse = []
         current_verse = ""
         with open(book, "r") as book_file:
             for line in book_file:
+                line = Tools.remove_unneeded_data(self, line)
                 if "001:001" in line:
                     past_title = True
                 if past_title == True:
                     if line != "\n":
-                        if(line[3]==':'):
-                            print(current_verse)
+                        if(len(line) >= 3 and line[3]==':'):
                             output[current_verse] = lines_of_verse
                             lines_of_verse = []
                             current_verse = line[0:7]
                             lines_of_verse.append(line)
                         else:
                                 lines_of_verse.append(line)
-                '''else:
-                    if "Book" in line and past_title == False:
-                        output[current_verse] = line'''
-        outputfile = "linedverse.txt"
+                else:
+                    if title == True:
+                        print(line)
+                        title = False
+                        output["title"] = line
+        outputfile = "source/linedverse.txt"
+        print(output)
         with open(outputfile, "w") as outfile:
             for title, item in output.items():
-                outfile.write(title)
                 for line in item:
                     outfile.write(line)
                 outfile.write("\n")
+
+    def remove_unneeded_data(self, line):
+        line = line.replace("      ", "")
+        line = line.replace("\n","")
+        return line
     
