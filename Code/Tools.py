@@ -1,10 +1,11 @@
-# This is where random things will be made
 from books_list import BooksList
 import os
 
 
 class Tools:
+    '''Tools to seperate and form books from the World English Bible'''
     def seperate_books(self):
+        '''Seperates books from one large file'''
         booknum = 0
 
         infile = open(r"source/eng_web_word.txt", "r")
@@ -40,6 +41,7 @@ class Tools:
         return output
 
     def create_books(self, outputfile):
+        '''Creates individual books'''
         dictionary = Tools.seperate_books(self)
         output = Tools.name_books(self, dictionary)
         for title, item in output.items():
@@ -49,6 +51,7 @@ class Tools:
                     outfile.write("\n")
     
     def name_books(self, dictionary):
+        '''Names books in dictionary'''
         books = BooksList.get_list(self)
         i = 0
         output = {}
@@ -58,6 +61,7 @@ class Tools:
         return output
 
     def join_book_verse(self, file_name, file_path, output_location):
+        '''Makes a single verse on one line'''
         past_title = False
         title = True
         output = {}
@@ -90,12 +94,13 @@ class Tools:
                 outfile.write("\n")
 
     def remove_unneeded_data(self, line):
+        '''Removes all empty lines and spaces in book'''
         line = line.replace("      ", "")
         line = line.replace("\n","")
         return line
 
     def run_all_folder_files(self, folder):
-        #Makes a list of all files in folder
+        '''Gets all file names in a folder and runs a function on each of them'''
         a_directory = folder
         for filename in os.listdir(a_directory):
             filepath = os.path.join(a_directory, filename)
