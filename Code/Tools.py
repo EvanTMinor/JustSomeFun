@@ -8,8 +8,8 @@ class Tools:
         '''Seperates books from one large file'''
         booknum = 0
 
-        infile = open(r"source/eng_web_word.txt", "r")
-        lastcheck = open(r"source/eng_web_word.txt", "r")
+        infile = open(r"source/World_English_Bible/eng_web_word.txt", "r")
+        lastcheck = open(r"source/World_English_Bible/eng_web_word.txt", "r")
         lines = lastcheck.readlines()
         last = lines[-1]
 
