@@ -1,5 +1,6 @@
 # This is where random things will be made
 from books_list import BooksList
+import os
 
 
 class Tools:
@@ -38,11 +39,10 @@ class Tools:
                 output[dicttitle] = linesofbook
         return output
 
-    def create_books(self):
+    def create_books(self, outputfile):
         dictionary = Tools.seperate_books(self)
         output = Tools.name_books(self, dictionary)
         for title, item in output.items():
-            outputfile = "World_English_Bible/" + title + ".txt"
             with open(outputfile, "w") as outfile:
                 for line in item:
                     outfile.write(line)
@@ -57,14 +57,13 @@ class Tools:
             i+=1
         return output
 
-    def join_verse(self, dictionary):
-        book = book + ".txt"
+    def join_book_verse(self, file_name, file_path, output_location):
         past_title = False
         title = True
         output = {}
         lines_of_verse = []
         current_verse = ""
-        with open(book, "r") as book_file:
+        with open(file_path, "r") as book_file:
             for line in book_file:
                 line = Tools.remove_unneeded_data(self, line)
                 if "001:001" in line:
@@ -78,13 +77,12 @@ class Tools:
                             lines_of_verse.append(line)
                         else:
                                 lines_of_verse.append(line)
+                                output[current_verse] = lines_of_verse
                 else:
                     if title == True:
-                        print(line)
                         title = False
                         output["title"] = line
-        outputfile = "source/linedverse.txt"
-        print(output)
+        outputfile = output_location + file_name
         with open(outputfile, "w") as outfile:
             for title, item in output.items():
                 for line in item:
@@ -95,4 +93,11 @@ class Tools:
         line = line.replace("      ", "")
         line = line.replace("\n","")
         return line
+
+    def run_all_folder_files(self, folder):
+        #Makes a list of all files in folder
+        a_directory = folder
+        for filename in os.listdir(a_directory):
+            filepath = os.path.join(a_directory, filename)
+            Tools.join_book_verse(self, filename, filepath, "source/WEB_Lined_Verses/")
     
