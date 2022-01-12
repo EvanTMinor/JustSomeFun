@@ -2,8 +2,8 @@ class SelectReading():
 
     def __init__(self):
         book = SelectReading.select_book(self)
-        book_eng = SelectReading.get_book(self, book, False)
-        SelectReading.print_book(self, book_eng)
+        selection = SelectReading.select_verse(self, book, "1:1")
+        SelectReading.print_book(self, selection)
 
     
     def select_book(self):
@@ -32,5 +32,31 @@ class SelectReading():
     def print_book(self, book):
         for line in book:
             print(line)
+
+    def select_verse(self, book, verse):
+        output = []
+        verse = SelectReading.parse_verse(self, verse)
+        with open(book, "r", encoding ="utf8") as book_file:
+            for line in book_file:
+                if verse in line:
+                    output.append(line)
+                    break
+        return(output)
+
+    def parse_verse(self, verse, language):
+        position = verse.index(':')
+        first, last = verse[:position], verse[position+1:]
+        if len(first)<3:
+            for i in range (3-len(first)):
+                first = "0" + first
+
+        if len(last)<3:
+            for i in range (3-len(last)):
+                last = "0" + last
+
+        verse = first + ":" + last
+        return verse
+
+        
 
 SelectReading()
